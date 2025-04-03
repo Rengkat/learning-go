@@ -1,30 +1,66 @@
 package main
 
 import "fmt"
-func add(a *int)  {
-	*a++
+
+// Person struct
+type Person struct {
+	Name string
+	Age  int
+}
+
+// Employee struct
+type Employee struct {
+	ID        int
+	Name      string
+	Position  string
+	Salary    float64
+	IsManager bool
+	Projects  []string
+}
+
+// Company struct
+type Company struct {
+	Name     string
+	Employee Employee // Changed to uppercase to make it exported
+}
+
+func (p Person) Greet() string {
+	return "Hello, my name is " + p.Name
 }
 
 func main() {
-	num := 5
-	mAddress :=&num
-	fmt.Println(mAddress)
-	fmt.Println(num)
-	*mAddress = 10
-	fmt.Println(*mAddress)
-	add(&num)
-	fmt.Println(num)
-	//structs
-		type Person struct{
-		Name string
-		Age int
-	}
-	person1 := Person{"Alexander Rengkat",30}
-	fmt.Println(person1.Name)
+	// Initializing Person structs
+	person1 := Person{"Alexander Rengkat", 30}
+	fmt.Println(person1.Name) // "Alexander Rengkat"
+
 	person2 := Person{
 		Name: "John Doe",
-		Age: 50,
+		Age:  50,
 	}
-	fmt.Println(person2.Age)
+	fmt.Println(person2.Age) // 50
+
+	var person3 Person
+	person3.Name = "Alex 0"
+	person3.Age = 24
+
+	// Initializing Company with Employee
+	company1 := Company{
+		Name: "John Solution",
+		Employee: Employee{
+			ID:        23,
+			Name:      "jina",
+			Position:  "senior dev",
+			Salary:    1234.6,
+			IsManager: false,
+			Projects:  []string{"song"},
+		},
+	}
+
+	fmt.Println(company1.Name)              // "John Solution"
+	fmt.Println(company1.Employee.Name)     // "jina"
+	fmt.Println(company1.Employee.Projects) // ["song"]
+
+	// Using the Greet method
+	person := Person{Name: "Frank"}
+	fmt.Println(person.Greet()) // "Hello, my name is Frank"
 }
-//struct
