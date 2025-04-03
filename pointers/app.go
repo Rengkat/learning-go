@@ -27,6 +27,21 @@ type Company struct {
 func (p Person) Greet() string {
 	return "Hello, my name is " + p.Name
 }
+	type (
+    Age      int
+    Email    string
+    PersonID string
+)
+
+type Person2 struct {
+    ID    PersonID
+    Name  string
+    Age   Age
+    Email Email
+}
+func (me Person2) Greeting() string {
+	return "Good morning " + me.Name
+}
 
 func main() {
 	// Initializing Person structs
@@ -62,5 +77,9 @@ func main() {
 
 	// Using the Greet method
 	person := Person{Name: "Frank"}
-	fmt.Println(person.Greet()) // "Hello, my name is Frank"
+	fmt.Println(person.Greet()) // 
+
+
+var friend = Person2{"234","LEXANDER", 23, "alexan@gmail.com"}
+fmt.Println(friend.Greeting())
 }
