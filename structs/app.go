@@ -1,35 +1,9 @@
 package main
 
 import (
-	"errors"
 	"fmt"
+	"github/Rengkat/structs/user"
 )
-
-type User struct {
-	name   string
-	age    int
-	height float64
-}
-
-// Using pointer receiver for consistency
-func (u *User) desc() {
-	fmt.Printf("My name is %s. I am %d years old and %.2f meters tall.\n", u.name, u.age, u.height)
-}
-
-func (u *User) clearName() {
-	u.name = ""
-}
-
-func newUser(name string, age int, height float64) (*User, error) {
-	if name == "" || age <= 0 || height <= 0 {
-		return nil, errors.New("please enter all fields with valid values")
-	}
-	return &User{
-		name:   name,
-		age:    age,
-		height: height,
-	}, nil
-}
 
 func main() {
 	var name string
@@ -43,15 +17,15 @@ func main() {
 	fmt.Print("Enter height: ")
 	fmt.Scanln(&height)
 
-	// Create a User instance using the newUser function
-	user, err := newUser(name, age, height)
+	// Create a User instance
+	user, err := user.NewUser(name, age, height)
 	if err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
 
-	// Call methods on the User instance
-	user.desc()
-	user.clearName()
-	user.desc()
+	// Call methods
+	fmt.Println(user.Desc()) // Print description
+	user.ClearName()         // Clear the name
+	fmt.Println(user.Desc()) // Print updated description
 }
