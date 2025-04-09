@@ -82,4 +82,8 @@ func main() {
 
 var friend = Person2{"234","LEXANDER", 23, "alexan@gmail.com"}
 fmt.Println(friend.Greeting())
+ sis := "nanmet"
+ sisPoint := &sis
+ fmt.Println(sis,sisPoint)
+ fmt.Scan(&sis)
 }
