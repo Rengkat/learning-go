@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"errors"
+	"fmt"
+)
 
 type User struct {
 	name   string
@@ -8,8 +11,8 @@ type User struct {
 	height float64
 }
 
-// desc is a method on the User type
-func (u User) desc() {
+// Using pointer receiver for consistency
+func (u *User) desc() {
 	fmt.Printf("My name is %s. I am %d years old and %.2f meters tall.\n", u.name, u.age, u.height)
 }
 
@@ -17,12 +20,15 @@ func (u *User) clearName() {
 	u.name = ""
 }
 
-func newUser(name string, age int, height float64) User {
-	return User{
+func newUser(name string, age int, height float64) (*User, error) {
+	if name == "" || age <= 0 || height <= 0 {
+		return nil, errors.New("please enter all fields with valid values")
+	}
+	return &User{
 		name:   name,
 		age:    age,
 		height: height,
-	}
+	}, nil
 }
 
 func main() {
@@ -31,16 +37,20 @@ func main() {
 	var height float64
 
 	fmt.Print("Enter name: ")
-	fmt.Scan(&name)
+	fmt.Scanln(&name)
 	fmt.Print("Enter age: ")
-	fmt.Scan(&age)
+	fmt.Scanln(&age)
 	fmt.Print("Enter height: ")
-	fmt.Scan(&height)
+	fmt.Scanln(&height)
 
 	// Create a User instance using the newUser function
-	user := newUser(name, age, height)
+	user, err := newUser(name, age, height)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
 
-	// Call the desc method on the User instance
+	// Call methods on the User instance
 	user.desc()
 	user.clearName()
 	user.desc()
